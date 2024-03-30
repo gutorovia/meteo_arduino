@@ -100,13 +100,9 @@ void drawValues(byte sensor) {
 
       if (historyCo2[sensor - SENSOR_CO2][i] * 0.9 < historyRange[sensor][RANGE_MIN]) {
         historyRange[sensor][RANGE_MIN] = historyCo2[sensor - SENSOR_CO2][i] * 0.9;
-        // Serial.print("min changed to: ");
-        // Serial.println(historyRange[sensor][RANGE_MIN]);
       }
       if (historyCo2[sensor - SENSOR_CO2][i] * 1.1 > historyRange[sensor][RANGE_MAX]) {
         historyRange[sensor][RANGE_MAX] = historyCo2[sensor - SENSOR_CO2][i] * 1.1;
-        // Serial.print("max changed to: ");
-        // Serial.println(historyRange[sensor][RANGE_MAX]);
       }
     } else {
       if (history[sensor][i + 1] == 0xff) break;
@@ -129,15 +125,7 @@ void drawValues(byte sensor) {
       if (history[sensor][i + 1] == 0xff) break;
     }
     word value_range = historyRange[sensor][RANGE_MAX] - historyRange[sensor][RANGE_MIN];
-    // Serial.println("========");
-    // Serial.println(value_range);
     float values_in_pixel = CHARTS_SIZE_Y / (float)value_range;
-    // Serial.print("values_in_pixel: ");
-    // Serial.println(values_in_pixel);
-    // Serial.print("historyCo2[sensor - SENSOR_CO2][i]: ");
-    // Serial.print(i);
-    // Serial.print(" ");
-    // Serial.println(historyCo2[sensor - SENSOR_CO2][i]);
 
     word value_diff_with_min_prev, value_diff_with_min_next;
     if (sensor == SENSOR_CO2) {
@@ -146,18 +134,9 @@ void drawValues(byte sensor) {
     } else {
       value_diff_with_min_prev = history[sensor][i] - historyRange[sensor][RANGE_MIN];
       value_diff_with_min_next = history[sensor][i + 1] - historyRange[sensor][RANGE_MIN];
-      // Serial.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
-    // Serial.print("historyRange[sensor][RANGE_MIN]: ");
-    // Serial.println(historyRange[sensor][RANGE_MIN]);
-    // Serial.print("historyRange[sensor][RANGE_MAX]: ");
-    // Serial.println(historyRange[sensor][RANGE_MAX]);
-    // Serial.print("value_diff_with_min_prev: ");
-    // Serial.println(value_diff_with_min_prev);
     byte shift_prev_y = value_diff_with_min_prev * values_in_pixel;
     byte shift_next_y = value_diff_with_min_next * values_in_pixel;
-    // Serial.print("shift_prev_y: ");
-    // Serial.println(shift_prev_y);
 
     oled.line(Y_AXIS_POSITION_X + i + SHIFT_GRAPHICS_FROM_Y_AXIS_X, base_y - shift_prev_y, Y_AXIS_POSITION_X + i + 1 + SHIFT_GRAPHICS_FROM_Y_AXIS_X, base_y - shift_next_y);
   }

@@ -88,24 +88,12 @@ void mq135Processing() {
     lcdLoop(currentSensorValues);
   }
 
-<<<<<<< Updated upstream
-  // Serial.print(correctedPPM);
-  // Serial.print(" ");
-  // Serial.println(correctedPPM);
-
-  if (!mq135Ready) {c:\Users\Илья\Desktop\Arduino\meteoV4\meteoV4.ino
-=======
   if (!mq135Ready) {
->>>>>>> Stashed changes
     if (calibrationAccumIndex == R_ZERO_VALUES_ACCUM_COUNT) {
       for (byte i = 0; i < R_ZERO_VALUES_ACCUM_COUNT - 1; i++) {
         calibrationAccum[i] = calibrationAccum[i + 1];
       }
       calibrationAccum[calibrationAccumIndex - 1] = correctedRZero;
-      // Serial.print(calibrationAccumIndex);
-      // Serial.print(" ");
-      // Serial.print(correctedRZero);
-      // Serial.println(" still filling accum");
 
       float min = calibrationAccum[0];
       float max = calibrationAccum[0];
@@ -115,31 +103,14 @@ void mq135Processing() {
       }
       if (max - min <= CALIBRATION_THRESHOLD) {
         mq135Ready = true;
-        // Serial.print("Done: ");
-        // Serial.print(min);
-        // Serial.print("...");
-        // Serial.print(max);
-        // Serial.print(": ");
-        // Serial.println(max - min);
         mq135 = MQ135(MQ135_APIN, correctedRZero, MQ135_RNAGRUZ);
         switchLightRed(false);
         zoomerBeep(1000, 300);
       } else {
-        // Serial.print("Still calibrating: ");
-        // Serial.print(min);
-        // Serial.print("...");
-        // Serial.print(max);
-        // Serial.print(": ");
-        // Serial.println(max - min);
         brightnessLightRed((max - min) * 1000);
-        // zoomerBeep(1000 + mq135RZeroEqualValuesCounter * 50, 20);
       }
     } else {
       calibrationAccum[calibrationAccumIndex] = correctedRZero;
-      // Serial.print(calibrationAccumIndex);
-      // Serial.print(" ");
-      // Serial.print(correctedRZero);
-      // Serial.println(" still filling accum");
       calibrationAccumIndex++;
     }
   }
@@ -152,14 +123,8 @@ void mq135Processing() {
 
 #ifdef MQ135_DEBUG
     Serial.print("MQ135-1");
-    // Serial.print("\tRZero: ");
-    // Serial.print(rzero[0]);
     Serial.print("\t Corrected RZero: ");
     Serial.print(correctedRZero);
-    // Serial.print("\t Resistance: ");
-    // Serial.print(resistance[0]);
-    // Serial.print("\t PPM: ");
-    // Serial.print(ppm[0]);
     Serial.print("ppm");
     Serial.print("\t Corrected PPM: ");
     Serial.print(correctedPPM);
